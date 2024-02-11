@@ -1,9 +1,12 @@
 package com.github.postteam.repository.user;
 
+import com.github.postteam.repository.like.LikeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,6 +24,9 @@ public class UserEntity {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "UserEntity")
+    private List<LikeEntity> likeEntities;
 
     public UserEntity(String email, String password){
         this.email = email;

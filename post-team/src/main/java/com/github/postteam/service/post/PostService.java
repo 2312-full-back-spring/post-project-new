@@ -1,6 +1,8 @@
 package com.github.postteam.service.post;
 
 import com.github.postteam.config.security.JwtUtil;
+import com.github.postteam.repository.like.LikeEntity;
+import com.github.postteam.repository.like.LikeRepository;
 import com.github.postteam.repository.post.PostEntity;
 import com.github.postteam.repository.post.PostRepository;
 import com.github.postteam.repository.user.UserEntity;
@@ -17,8 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +32,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
     private final JwtUtil jwtUtil;
 
     // 포스트 작성
@@ -111,4 +117,23 @@ public class PostService {
     }
 
 
+    // 좋아요 생성 및 삭제
+    public void postLike(
+          Boolean like,
+          Integer postId,
+          HttpServletRequest request
+    ) {
+        UserEntity userEntity = getUserFromToken(request);
+        PostEntity postEntity = postRepository.findById(postId).orElseThrow(
+                () -> new NoResultException("해당 포스트를 찾을 수 없습니다.")
+        );
+
+        LikeEntity likeEntity = new LikeEntity(userEntity, postEntity);
+
+        if (like) {
+            likeRepository.save(likeEntity);
+        } else  {
+            likeRepository.delete(likeEntity);
+        }
+    }
 }

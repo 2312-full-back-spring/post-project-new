@@ -1,5 +1,6 @@
 package com.github.postteam.web.controller;
 
+import com.github.postteam.repository.user.UserEntity;
 import com.github.postteam.service.post.PostService;
 import com.github.postteam.web.dto.MsgResponseDto;
 import com.github.postteam.web.dto.post.PostRequestDto;
@@ -49,5 +50,12 @@ public class PostController {
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity<MsgResponseDto> deletePost(@PathVariable Integer postId, HttpServletRequest request){
         return ResponseEntity.ok(postService.deletePost(postId, request));
+    }
+
+    @PostMapping("/posts/like/{postId}")
+    public ResponseEntity<Boolean> postLike(@PathVariable Boolean like, @PathVariable Integer postId, HttpServletRequest request) {
+
+        postService.postLike(like, postId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 }

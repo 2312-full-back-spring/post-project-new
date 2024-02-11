@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+datasource:
+  username: root
+  password: 12341234
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/post_project
+
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+
+jwt:
+  secret-key-source: 7Iqk7YyM66W07YOA7L2U65Sp7YG065+9U3ByaW5n6rCV7J2Y7Yqc7YSw7LWc7JuQ67mI7J6F64uI64ukLg

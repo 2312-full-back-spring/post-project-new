@@ -25,7 +25,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "UserEntity")
+    @OneToMany(mappedBy = "userEntity")
     private List<LikeEntity> likeEntities;
 
     public UserEntity(String email, String password){

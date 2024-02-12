@@ -15,6 +15,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.persistence.NoResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
@@ -119,7 +122,7 @@ public class PostService {
 
     // 좋아요 생성 및 삭제
     public void postLike(
-          Boolean like,
+          String like,
           Integer postId,
           HttpServletRequest request
     ) {
@@ -127,10 +130,9 @@ public class PostService {
         PostEntity postEntity = postRepository.findById(postId).orElseThrow(
                 () -> new NoResultException("해당 포스트를 찾을 수 없습니다.")
         );
-
         LikeEntity likeEntity = new LikeEntity(userEntity, postEntity);
 
-        if (like) {
+        if (Objects.equals(like, "true")) {
             likeRepository.save(likeEntity);
         } else  {
             likeRepository.delete(likeEntity);

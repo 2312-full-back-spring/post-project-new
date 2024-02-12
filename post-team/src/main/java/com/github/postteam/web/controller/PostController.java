@@ -53,7 +53,7 @@ public class PostController {
     }
 
     @PostMapping("/posts/like/{postId}")
-    public ResponseEntity<Boolean> postLike(@PathVariable Boolean like, @PathVariable Integer postId, HttpServletRequest request) {
+    public ResponseEntity<Boolean> postLike(@RequestParam String like, @PathVariable Integer postId, HttpServletRequest request) {
 
         postService.postLike(like, postId, request);
         return ResponseEntity.status(HttpStatus.OK).body(true);

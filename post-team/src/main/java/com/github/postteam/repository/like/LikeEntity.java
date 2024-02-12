@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "like")
+@Table(name = "post_like")
 public class LikeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

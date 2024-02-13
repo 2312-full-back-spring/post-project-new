@@ -71,6 +71,12 @@ public class PostService {
         return new PostResponseDto(postEntity);
     }
 
+    // 포스트 이메일로 조회
+    public List<PostResponseDto> findPostsByEmail(String email) {
+        List<PostEntity> postEntities = postRepository.findPostEntitiesByAuthor(email);
+        return postEntities.stream().map(PostResponseDto::new).toList();
+    }
+
     // 포스트 수정
     @Transactional
     public PostResponseDto updatePost(Integer postId, PostRequestDto postRequestDto, HttpServletRequest request) {

@@ -37,6 +37,13 @@ public class PostController {
         return ResponseEntity.ok(postService.getPost(postId));
     }
 
+    // 포스트 이메일로 조회 (쿼리문)
+    @GetMapping("/posts/search")
+    public List<PostResponseDto> findPostByEmail(
+            @RequestParam("author_email") String email){
+        return postService.findPostsByEmail(email);
+    }
+
     // 포스트 수정
     @PutMapping("/posts/{postId}")
     public ResponseEntity<PostResponseDto> updatePost(@PathVariable Integer postId,
@@ -44,7 +51,6 @@ public class PostController {
                                                       HttpServletRequest request){
         return ResponseEntity.ok(postService.updatePost(postId, postRequestDto, request));
     }
-
 
     // 포스트 삭제
     @DeleteMapping("/posts/{postId}")
